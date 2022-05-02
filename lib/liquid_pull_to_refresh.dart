@@ -55,6 +55,7 @@ class LiquidPullToRefresh extends StatefulWidget {
     this.springAnimationDurationInMilliseconds = 1000,
     this.borderWidth = 2.0,
     this.showChildOpacityTransition = true,
+    this.label,
   })  : assert(animSpeedFactor >= 1.0),
         super(key: key);
 
@@ -106,6 +107,9 @@ class LiquidPullToRefresh extends StatefulWidget {
   /// The progress indicator's background color. The current theme's
   /// [ThemeData.canvasColor] by default.
   final Color? backgroundColor;
+
+  /// Optional widget that describes this widget.
+  final Widget? label;
 
   @override
   LiquidPullToRefreshState createState() => LiquidPullToRefreshState();
@@ -626,7 +630,12 @@ class LiquidPullToRefreshState extends State<LiquidPullToRefresh>
               ),
               child: Container(
                 height: _value.value * height * 2, // 100.0
+                width: double.infinity,
                 color: color,
+                child: _mode == _LiquidPullToRefreshMode.drag ||
+                        _mode == _LiquidPullToRefreshMode.armed
+                    ? widget.label
+                    : null,
               ),
             );
           },
